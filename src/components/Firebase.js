@@ -1,16 +1,15 @@
 import firebase from "firebase";
-import "firebase/firestore";
-import "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCQVFZ3-00JB0ycjIslMbEsqEIZf9mzQpY",
-  authDomain: "projeto-bsi-ff1e2.firebaseapp.com",
-  databaseURL: "https://projeto-bsi-ff1e2-default-rtdb.firebaseio.com",
-  projectId: "projeto-bsi-ff1e2",
-  storageBucket: "projeto-bsi-ff1e2.appspot.com",
-  messagingSenderId: "847163358490",
-  appId: "1:847163358490:web:37aab53032b90a5e1c00a3",
-  measurementId: "G-0V4M1LSTDW",
+
+  apiKey: "AIzaSyDP24ZYDelNj7IMFJmSfwL9I13417X3qvg",
+  authDomain: "socialpomodoro-b18de.firebaseapp.com",
+  projectId: "socialpomodoro-b18de",
+  storageBucket: "socialpomodoro-b18de.appspot.com",
+  messagingSenderId: "300200574357",
+  appId: "1:300200574357:web:bd22ff05c5a40ae1c50a9c",
+  measurementId: "G-CMNVLEM0PP"
+
 };
 
 if (!firebase.apps.length) {
