@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 const Styles = StyleSheet.create({
-  titulo: {
+  title: {
     fontSize: 24,
     fontWeight: "bold",
     color: "white",

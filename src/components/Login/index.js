@@ -32,30 +32,29 @@ export default function Login() {
       });
   }
 
-  function teste() {
-    firebase.collection("usuarios").add({
-      name: name,
-      password: password,
-    });
-  }
-
   return (
     <View>
-      <Text style={Styles.titulo}>Login</Text>
+      <Text style={Styles.title}>Login</Text>
       <TextInput
+        autoCapitalize="none"
+        autoCorrect={false}
         onChangeText={setName}
         value={name}
         style={Styles.input}
         placeholder="Insira seu e-mail"
       />
-      <Text style={Styles.titulo}>Senha</Text>
+      <Text style={Styles.title}>Senha</Text>
       <TextInput
+        secureTextEntry={true}
+        autoCorrect={false}
         onChangeText={setPassword}
         value={password}
         style={Styles.input}
         placeholder="Insira sua senha"
       />
       <Button onPress={authenticate} title="Entrar" />
+      <Text></Text>
+      <Button onPress={authenticate} title="Registrar-se" />
     </View>
   );
 }
