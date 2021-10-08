@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import firebase from "../Firebase";
 
 import Styles from "./style";
@@ -54,7 +56,7 @@ export default function Login() {
       />
       <Button onPress={authenticate} title="Entrar" />
       <Text></Text>
-      <Button onPress={authenticate} title="Registrar-se" />
+      <Button onPress={""} title="Registrar-se" />
     </View>
   );
 }
