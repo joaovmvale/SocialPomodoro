@@ -1,0 +1,32 @@
+# Criar o projeto com expo
+    expo init [NOME_DO_PROJETO]
+
+# Instalar a biblioteca de navegacao
+    npm install @react-navigation/native
+    
+    # Stack Navigation
+        npm install @react-navigation/stack
+
+    # Drawer Navigation
+        npm install @react-navigation/drawer
+
+    # Bottom tabs Navigation
+        npm install @react-navigation/bottom-tabs
+
+    # Instalar as dependencias para funcionar com projetos expo
+        expo install react-native-screens react-native-safe-area-context
+	
+	# Instalar a biblioteca identificar toque na tela
+		npm install react-native-gesture-handler
+
+# Biblioteca de estilo (React Native Paper)
+	npm install react-native-paper    
+	npm install react-native-vector-icons
+	
+	# Alterar a compilacao no babel.config.js
+		presets: ["module:metro-react-native-babel-preset"],
+		env: {
+		  production: {
+			plugins: ["react-native-paper/babel"],
+		  },
+		},
