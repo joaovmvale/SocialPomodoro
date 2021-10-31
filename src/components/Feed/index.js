@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {View, FlatList} from "react-native"; 
+import {StyleSheet, View, FlatList} from "react-native"; 
 
 import Post from "../Post"
 import firebase from "../Firebase"
@@ -12,27 +12,29 @@ export default function Feed(){
 
     useEffect(()=>{
 
-        firestore.collection("Posts").onSnapshot((snapshot)=>{
-            const list = []
-            snapshot.forEach((doc) =>{
+        firestore.collection("Users").onSnapshot((usersSnapshot)=>{
+            let list = []
+            
+            usersSnapshot.forEach(async userDoc=>{
 
-                list.push(doc.data())
+                await userDoc.ref.collection('Posts').get().then(postSnapshot=>{
+                    postSnapshot.forEach(async postDoc=>{
+                        list.push({...postDoc.data(), userData: userDoc.data()})
+                        setPosts(list)
+                    })
+                })
 
             })
-            
-            setPosts(list)
-
         })
 
-        return () => { unmounted = true };
 
     }, [])
 
 
     return (
 
-        <View>
-            <FlatList showsVerticalScrollIndicator={false}
+        <View style={styles.feed}>
+            <FlatList showsVerticalScrollIndicator={true}
              data={posts}
              renderItem={({item})=>{
                  return(
@@ -46,3 +48,17 @@ export default function Feed(){
 
 }
 
+const styles = StyleSheet.create({
+
+    feed:{
+
+        marginRight: 0,
+        width: '100%',
+        paddingTop: 50,
+        backgroundColor: 'white',
+        paddingBottom: 30,
+        color: 'red'
+
+    }
+
+})
