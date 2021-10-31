@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 
 export default function Loading({}) {
   return (
     <View style={styles.container}>
-      <Text>Loading...</Text>
+      <Text>Carregando</Text>
       <ActivityIndicator size="large" color="#0000ff" />
     </View>
   );

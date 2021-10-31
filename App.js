@@ -1,47 +1,23 @@
-import React from "react";
+import "react-native-gesture-handler";
+
+import React, { useContext, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import Loading from "./src/navigation/Loading";
-import Login from "./src/navigation/Login";
-import Register from "./src/navigation/Register";
-import Home from "./src/navigation/Home";
+import { AuthProvider } from "./src/components/contexts/auth";
+import AuthContext from "./src/components/contexts/auth";
 
-const AuthStack = createStackNavigator();
-const AuthStackScreen = () => (
-  <AuthStack.Navigator>
-    <AuthStack.Screen name="Login" component={Login} />
-    <AuthStack.Screen name="Register" component={Register} />
-  </AuthStack.Navigator>
-);
+import AuthRoutes from "./src/components/routes/auth.routes";
+import AppRoutes from "./src/components/routes/app.routes";
 
-const AppTab = createBottomTabNavigator();
-const AppTabScreen = () => (
-  <AppTab.Navigator>
-    <AppTab.Screen name="Home" component={Home} />
-  </AppTab.Navigator>
-);
+import Loading from "./src/components/pages/Loading";
 
-export default () => {
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [userToken, setUserToken] = React.useState(null);
-
-  React.useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(!isLoading);
-    }, 500);
-  }, []);
-
+export default function App() {
+  const { signed } = useContext(AuthContext);
   return (
     <NavigationContainer>
-      {isLoading ? (
-        <Loading />
-      ) : userToken ? (
-        <AppTabScreen />
-      ) : (
-        <AuthStackScreen />
-      )}
+      {signed ? <AppRoutes /> : <AuthRoutes />}
     </NavigationContainer>
   );
-};
+}

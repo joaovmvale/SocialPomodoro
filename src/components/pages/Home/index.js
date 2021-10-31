@@ -10,7 +10,7 @@ import {
 
 import { Button, TextInput } from "react-native-paper";
 
-import firebase from "../../utils/Firebase";
+import firebase from "../../../utils/Firebase";
 
 import Styles from "./style";
 
