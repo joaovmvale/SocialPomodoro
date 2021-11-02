@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 
 import {
   View,
@@ -10,19 +10,15 @@ import {
 
 import { Button, TextInput } from "react-native-paper";
 
-import firebase from "../../../utils/Firebase";
+import firebase from "../../utils/Firebase";
 
 import Styles from "./style";
-
-import AuthContext from "../../contexts/auth";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [fLoading, setFLoading] = useState(false);
-
-  const { signed } = useContext(AuthContext);
 
   async function handleLogin() {
     Keyboard.dismiss();
@@ -31,11 +27,7 @@ export default function Login({ navigation }) {
     setLoading(true);
 
     try {
-      await firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password)
-        console.log(signed);
-      Alert.alert("Autenticado!");
+      await firebase.auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
       Alert.alert("Erro ao autenticar", error.message);
       setPassword("");
@@ -59,12 +51,6 @@ export default function Login({ navigation }) {
       Alert.alert(error.message);
     }
     setFLoading(false);
-  }
-
-  async function handleSignOut() {
-    firebase.auth().signOut();
-    setUserToken(null);
-    setUserName(null);
   }
 
   return (
@@ -113,9 +99,6 @@ export default function Login({ navigation }) {
           onPress={() => navigation.navigate("Register")}
         >
           Cadastrar
-        </Button>
-        <Button style={Styles.button} mode="contained" onPress={handleSignOut}>
-          SignOut
         </Button>
       </View>
     </TouchableWithoutFeedback>

@@ -1,16 +1,32 @@
-import React, { createContext, useReducer } from "react";
+import React from "react";
+import { useState, createContext, useEffect } from "react";
 
-const AuthContext = createContext({
-  signed: false,
-  user: {},
-});
+import firebase from "../utils/Firebase";
 
-export function AuthProvider({ children }) {
-  return (
-    <AuthContext.Provider value={{ signed, user }}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setUser(user);
+      } else {
+        setIsLoggedIn(false);
+        setUser(null);
+      }
+    });
+  });
+
+  const value = {
+    isLoggedIn,
+    user,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
 
 export default AuthContext;

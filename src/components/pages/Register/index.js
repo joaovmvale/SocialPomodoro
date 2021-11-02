@@ -13,7 +13,7 @@ import { Button } from "react-native-paper";
 
 import { TextInputMask } from "react-native-masked-text";
 
-import firebase from "../../../utils/Firebase";
+import firebase from "../../utils/Firebase";
 
 import Styles from "./style";
 
