@@ -8,9 +8,9 @@ const AppStack = createBottomTabNavigator();
 
 export default function AppRoutes() {
   return (
-    <AppStack.Navigator>
-      <AppStack.Screen name="Home" component={Home} />
+    <AppStack.Navigator initialRouteName="Feed">
       <AppStack.Screen name="Feed" component={Feed} />
+      <AppStack.Screen name="Home" component={Home} />
     </AppStack.Navigator>
   );
 }

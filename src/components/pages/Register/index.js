@@ -42,7 +42,7 @@ export default function Register({ navigation }) {
         .then(async (response) => {
           await firebase
             .firestore()
-            .collection("users")
+            .collection("Users")
             .doc(response.user.uid)
             .set({
               name,
