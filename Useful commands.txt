@@ -30,3 +30,9 @@
 			plugins: ["react-native-paper/babel"],
 		  },
 		},
+
+.color1 {color: #621648;}
+.color2 {color: #881648;}
+.color3 {color: #bd2047;}
+.color4 {color: #fb3a49;}
+.color5 {color: #ff7b41;}

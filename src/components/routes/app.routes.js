@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StatusBar } from "react-native";
 
 import Home from "../pages/Home";
 import Feed from "../pages/Feed";
@@ -9,11 +9,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Ionicons } from "@expo/vector-icons";
 
-const AppStack = createBottomTabNavigator();
+const AppTab = createBottomTabNavigator();
 
 export default function AppRoutes() {
   return (
-    <AppStack.Navigator
+    <AppTab.Navigator
       initialRouteName="Feed"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
@@ -52,9 +52,9 @@ export default function AppRoutes() {
         },
       })}
     >
-      <AppStack.Screen name="Feed" component={Feed} />
-      <AppStack.Screen name="Home" component={Home} />
-      <AppStack.Screen name="Pomodoro" component={Pomodoro} />
-    </AppStack.Navigator>
+      <AppTab.Screen name="Feed" component={Feed} />
+      <AppTab.Screen name="Home" component={Home} />
+      <AppTab.Screen name="Pomodoro" component={Pomodoro} />
+    </AppTab.Navigator>
   );
 }
