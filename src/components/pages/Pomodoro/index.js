@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Stylesheet } from "react-native";
+import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
 
 import Slider from "@react-native-community/slider";
 import ProgressCircle from "react-native-progress-circle";
+import { Ionicons } from "@expo/vector-icons";
 
 import Styles from "./style";
 
@@ -38,8 +39,12 @@ export default function Pomodoro() {
   });
 
   function startTimer() {
-    setIsRunning(true);
+    setIsRunning(!isRunning);
     setinitalMinutes(minutes);
+    setTimeout(() => {
+
+    },)
+
   }
 
   function resetTimer() {
@@ -64,8 +69,8 @@ export default function Pomodoro() {
           percent={progress}
           radius={70}
           borderWidth={9}
-          color="#DC3545"
-          shadowColor="#000000"
+          color="#28A745"
+          shadowColor="#DC3545"
           bgColor="#FFFFFF"
         >
           <Text style={Styles.text}>
@@ -101,7 +106,7 @@ export default function Pomodoro() {
           mode="contained"
           onPress={() => startTimer()}
         >
-          INICIAR
+          {isRunning ? "PAUSAR" : "INICIAR"}
         </Button>
         <Button
           style={Styles.buttonReset}
@@ -109,6 +114,15 @@ export default function Pomodoro() {
           onPress={() => resetTimer()}
         >
           RESETAR
+        </Button>
+      </View>
+      <View style={Styles.pomodoroContainer}>
+        <Button
+          style={Styles.buttonPomodoro}
+          mode="contained"
+          onPress={() => alert("Configurações")}
+        >
+          <Ionicons name="rocket-outline" size={20} color="white" />+
         </Button>
       </View>
     </View>
