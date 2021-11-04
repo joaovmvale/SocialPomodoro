@@ -1,59 +1,85 @@
 import React from "react";
+import { Image, Button } from "react-native";
 
 import Home from "../pages/Home";
 import Feed from "../pages/Feed";
 import Pomodoro from "../pages/Pomodoro";
+import AddPost from "../pages/AddPost";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Ionicons } from "@expo/vector-icons";
 
-const AppTab = createBottomTabNavigator();
+const AppStack = createBottomTabNavigator();
 
 export default function AppRoutes() {
   return (
-    <AppTab.Navigator
+    <AppStack.Navigator
       initialRouteName="Feed"
+
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+        tabBarIcon: ({ size, specificStyle, color }) => {
+          let isIcon = true
           let iconName;
 
           switch (route.name) {
             case "Feed":
-              iconName = "home";
-              size = 40;
+              iconName = "home-outline";
+              size = 30;
               break;
-            case "Home":
-              iconName = "open";
-              size = 40;
+            case "Chat":
+              iconName = "chatbubbles-outline";
+              size = 30;
               break;
             case "Pomodoro":
-              iconName = "stopwatch";
+              iconName = "stopwatch-outline";
               size = 40;
+              specificStyle = {
+
+                backgroundColor: "#292f36",
+                borderRadius: 200,
+                marginBottom: 20,
+                padding: 8
+
+              }
               break;
+            case "AddPost":
+              iconName = "add-circle-outline";
+              size = 30;
+              break;
+            case "Profile":
+              isIcon = false;
+              size = 30
+              break;
+            
+
             default:
               iconName = "help";
               break;
           }
 
-          return <Ionicons name={iconName} size={size} color={color} />;
+          if(isIcon)
+            return <Ionicons name={iconName} size={size} style={specificStyle} color={color}/>
+          else
+           return <Image style={{width: size, height: size}} source={require('../../../assets/favicon.png')} />
         },
-        tabBarActiveTintColor: "#ffc17b",
-        tabBarInactiveTintColor: "#777",
-        headerShown: false,
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: '#b4b4b4',
         tabBarShowLabel: false,
         tabBarStyle: {
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#8e3768",
-          borderTopWidth: 3,
-          borderTopColor: "black",
+          backgroundColor: "#292f36",
+          color: 'black'
         },
+        
       })}
     >
-      <AppTab.Screen name="Feed" component={Feed} />
-      <AppTab.Screen name="Home" component={Home} />
-      <AppTab.Screen name="Pomodoro" component={Pomodoro} />
-    </AppTab.Navigator>
+      <AppStack.Screen name="Feed" component={Feed}/>
+      <AppStack.Screen name="Chat" component={Feed} />
+      <AppStack.Screen name="Pomodoro" component={Pomodoro} />
+      <AppStack.Screen name="AddPost" component={AddPost} />
+      <AppStack.Screen name="Profile" component={Home} />
+    </AppStack.Navigator>
   );
 }

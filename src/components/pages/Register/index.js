@@ -48,6 +48,7 @@ export default function Register({ navigation }) {
               name,
               email,
               birth,
+              id: response.user.uid
             })
             .then(() => {
               setName("");
