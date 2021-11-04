@@ -12,6 +12,7 @@ export default function AddPost({navigation}) {
 
 
   useEffect(() => {
+
     (async () => {
       if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -31,8 +32,6 @@ export default function AddPost({navigation}) {
       quality: 1,
     });
 
-    console.log(result)
-
     if (!result.cancelled) {
       setImage(result.uri);
     }
@@ -43,24 +42,25 @@ export default function AddPost({navigation}) {
 
     try {
 
-      await firebase
-        .firestore()
-        .collection("Users")
-        .doc(user.uid)
-        .collection("Posts")
-        .add({description}).then(async (docRef)=>{
-          
-          if(image){    
+      let docRef = await firebase
+      .firestore()
+      .collection("Users")
+      .doc(user.uid)
+      .collection("Posts")
+      .doc()
 
-            const response = await fetch(image);
-            const blob = await response.blob();
-
-            await firebase.storage().ref('PostsImages/' + docRef.id + '.jpg').put(blob)
+      let id = docRef.id
   
-          }
+      docRef.set({id, description})
 
+      if(image){    
 
-        })
+        const response = await fetch(image);
+        const blob = await response.blob();
+
+        await firebase.storage().ref('PostsImages/' + id + '.jpg').put(blob)
+
+      }
        
     } catch (error) {
       Alert.alert("Erro", error.message);

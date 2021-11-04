@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import firebase from "../../utils/Firebase";
+import PostOptions from './PostOptions'
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 var storage = firebase.storage();
 
@@ -13,24 +15,33 @@ export default function Post(props) {
   const [profilePictureLink, setProfilePictureLink] = useState(
     "https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/error-image-generic.png?alt=media&token=cac1d2ab-5df2-493b-8f76-ffc8abc65dbf"
   );
+  const [dropdown, setDropdown] = useState(false)
 
   useEffect(() => {
-    const fetchData = async () => {
-      const imageURL = await storage
-        .ref("PostsImages/" + props.postObject.id + ".jpg")
-        .getDownloadURL();
-      const profilePictureURL = await storage
-        .ref("UsersProfiles/" + props.postObject.userData.id + ".jpg")
-        .getDownloadURL();
-      setImageLink(imageURL);
-      setProfilePictureLink(profilePictureURL);
+    const fetchData = () => {
+      
+        setTimeout(async ()=>{
+          const imageURL = await storage
+          .ref("PostsImages/" + props.postObject.id + ".jpg")
+          .getDownloadURL()
+          
+  
+          setImageLink(imageURL);
+          const profilePictureURL = await storage
+            .ref("UsersProfiles/" + props.postObject.userData.id + ".jpg")
+            .getDownloadURL();
+  
+          setProfilePictureLink(profilePictureURL);
+  
+        }, 3000)
+
     };
 
     fetchData();
   }, []);
 
   return (
-    <View style={styles.post}>
+    <TouchableWithoutFeedback style={styles.post} >
       <View style={styles.header}>
         <Image
           style={styles.profilePicture}
@@ -42,8 +53,16 @@ export default function Post(props) {
             {props.postObject.userData.cityState}
           </Text>
         </View>
+        <Ionicons
+            style={styles.more}
+            name="ellipsis-vertical-outline"
+            size={30}
+            color="black"
+            onPress={()=>setDropdown(!dropdown)}
+          />
+          {dropdown ? <PostOptions id={props.postObject.id}/> : <View/>}
       </View>
-
+      
       <Image style={styles.image} source={{ uri: imageLink }}></Image>
 
       <View style={styles.buttons}>
@@ -62,7 +81,7 @@ export default function Post(props) {
         <Text style={styles.likes}>Curtido por: Samuel, Josh e Mike</Text>
       </View>
 
-      <View style={styles.descriptionView}>
+      <View style={styles.descriptionView} onp>
         <Text style={styles.description}>
           <Text style={styles.descriptionName}>
             {props.postObject.userData.name}:{" "}
@@ -82,7 +101,7 @@ export default function Post(props) {
           <Text>Adicione um comentário</Text>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -118,6 +137,13 @@ const styles = StyleSheet.create({
   author: {
     color: "black",
     fontSize: 23,
+  },
+
+  more:{
+    marginLeft: 'auto',
+    marginRight: 10,
+    fontSize: 24,
+    padding: 10,
   },
 
   descriptionView: {

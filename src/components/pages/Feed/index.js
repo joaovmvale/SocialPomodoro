@@ -10,22 +10,21 @@ export default function Feed() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-
+    
     firestore.collection("Users").onSnapshot((usersSnapshot) => {
-      let list = [];
 
-      console.log(usersSnapshot)
       usersSnapshot.forEach(async (userDoc) => {
         await userDoc.ref
-          .collection("Posts")
-          .get()
-          .then((postSnapshot) => {
-            postSnapshot.forEach(async (postDoc) => {
+          .collection("Posts").onSnapshot(postsSnapshot=>{
+            let list = [];
+            setPosts([])
+            postsSnapshot.forEach(async (postDoc) => {
+    
               list.unshift({ ...postDoc.data(), userData: userDoc.data() });
               setPosts(list);
+              
             });
-          });
-
+          })
       });
     });
   }, []);
