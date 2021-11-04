@@ -22,7 +22,17 @@ export default function Home() {
   }
 
   async function handlePost() {
- 
+    try {
+      await firebase
+        .firestore()
+        .collection("Users")
+        .doc(user.uid)
+        .collection("Posts")
+        .doc(user.uid)
+        .set({ description });
+    } catch (error) {
+      Alert.alert("Erro", error.message);
+    }
   }
 
   return (
@@ -33,6 +43,7 @@ export default function Home() {
         onChangeText={(text) => setDescription(text)}
       />
       <Button onPress={handleLogout}>LOGOUT</Button>
+      <Button onPress={handlePost}>INVIAR POST</Button>
     </View>
   );
 }
