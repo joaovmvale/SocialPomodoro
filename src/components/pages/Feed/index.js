@@ -5,16 +5,13 @@ import Post from "../Post";
 import AuthContext from "../../contexts/auth";
 
 export default function Feed() {
-  const {posts, loadPosts} = useContext(AuthContext);
+  const { posts, loadPosts } = useContext(AuthContext);
 
   useEffect(() => {
-
-    loadPosts()
-
+    loadPosts();
   }, []);
 
   return (
-
     <View style={styles.feed}>
       <FlatList
         showsVerticalScrollIndicator={true}
@@ -24,11 +21,8 @@ export default function Feed() {
         }}
       />
     </View>
-   
-  )
+  );
 }
-
-
 
 const styles = StyleSheet.create({
   feed: {

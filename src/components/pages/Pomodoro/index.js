@@ -4,11 +4,10 @@ import { Button } from "react-native-paper";
 
 import Slider from "@react-native-community/slider";
 import ProgressCircle from "react-native-progress-circle";
-import { Ionicons } from "@expo/vector-icons";
 
 import Styles from "./style";
 
-export default function Pomodoro({ navigation }) {
+export default function Pomodoro() {
   const [minutes, setMinutes] = useState(25);
   const [seconds, setSeconds] = useState(0);
   const [breakTime, setBreakTime] = useState(5);
@@ -16,8 +15,6 @@ export default function Pomodoro({ navigation }) {
   const [isRunning, setIsRunning] = useState(false);
   const [initalMinutes, setinitalMinutes] = useState(0);
   const [progress, setProgress] = useState(100);
-  const [modalVisible, setModalVisible] = useState(false);
-  const containerStyle = { backgroundColor: "white", padding: 20 };
 
   useEffect(() => {
     if (isRunning) {
@@ -39,12 +36,6 @@ export default function Pomodoro({ navigation }) {
       return () => clearInterval(interval);
     }
   });
-
-  function openDrawer() {
-    navigation.navigate("PomodoroDrawer", {
-      screen: "PomodoroPreSave",
-    });
-  }
 
   function startTimer() {
     setIsRunning(!isRunning);
@@ -86,7 +77,7 @@ export default function Pomodoro({ navigation }) {
       <Text style={Styles.sliderText}>Tempo de trabalho</Text>
       <Slider
         style={{ width: 250, height: 40 }}
-        minimumValue={0}
+        minimumValue={5}
         maximumValue={120}
         step={5}
         onValueChange={(value) => setMinutes(value)}
@@ -97,7 +88,7 @@ export default function Pomodoro({ navigation }) {
       <Text style={Styles.sliderText}>Tempo de descanso: {breakTime}min</Text>
       <Slider
         style={{ width: 250, height: 40 }}
-        minimumValue={0}
+        minimumValue={5}
         maximumValue={60}
         step={5}
         onValueChange={(value) => setBreakTime(value)}

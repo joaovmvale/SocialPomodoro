@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import {
   View,
   Text,
@@ -7,7 +6,6 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-
 import { Button, TextInput } from "react-native-paper";
 
 import firebase from "../../utils/Firebase";

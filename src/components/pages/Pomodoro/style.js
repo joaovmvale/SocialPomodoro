@@ -40,9 +40,3 @@ const Styles = StyleSheet.create({
 });
 
 export default Styles;
-
-// #621648
-// #881648
-// #bd2047
-// #fa1427
-// #ff7b41

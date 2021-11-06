@@ -31,6 +31,28 @@ const Styles = StyleSheet.create({
     borderRadius: 5,
     margin: 5,
   },
+  imageContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    marginLeft: "-30%",
+  },
+  postImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 10,
+    borderWidth: 0.5,
+    borderColor: "black",
+    backgroundColor: "white",
+    marginLeft: "5%",
+  },
+  postImageText: {
+    fontSize: 15,
+    textAlignVertical: "center",
+    color: "white",
+    marginLeft: "2.5%",
+  },
 });
 
 export default Styles;

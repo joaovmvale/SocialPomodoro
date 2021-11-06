@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-
 import {
   View,
   Text,
   TextInput,
+  Image,
   Alert,
   Keyboard,
+  TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
-
 import { Button } from "react-native-paper";
-
 import { TextInputMask } from "react-native-masked-text";
+import * as ImagePicker from "expo-image-picker";
 
 import firebase from "../../utils/Firebase";
 
@@ -23,7 +23,22 @@ export default function Register({ navigation }) {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [birth, setBirth] = useState("");
+  const [image, setImage] = useState(
+    "https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/default-upload-image.png.png?alt=media&token=8292a6e7-7c5f-4295-bcf0-c083e3f4611e"
+  );
   const [loading, setLoading] = useState(false);
+
+  async function pickImage() {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  }
 
   async function handleRegister() {
     Keyboard.dismiss();
@@ -40,6 +55,10 @@ export default function Register({ navigation }) {
         .auth()
         .createUserWithEmailAndPassword(email, password)
         .then(async (response) => {
+          response.user.updateProfile({
+            displayName: name,
+            photoURL: image,
+          });
           await firebase
             .firestore()
             .collection("Users")
@@ -48,7 +67,7 @@ export default function Register({ navigation }) {
               name,
               email,
               birth,
-              id: response.user.uid
+              id: response.user.uid,
             })
             .then(() => {
               setName("");
@@ -112,6 +131,10 @@ export default function Register({ navigation }) {
           value={birth}
           onChangeText={(text) => setBirth(text)}
         />
+        <TouchableOpacity style={Styles.imageContainer} onPress={pickImage}>
+          <Image style={Styles.postImage} source={{ uri: image }} />
+          <Text style={Styles.postImageText}>Imagem de perfil</Text>
+        </TouchableOpacity>
         <Button
           mode="contained"
           style={Styles.button}

@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import firebase from "../../utils/Firebase";
-import PostOptions from './PostOptions'
+import PostOptions from "./PostOptions";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 var storage = firebase.storage();
@@ -15,38 +15,35 @@ export default function Post(props) {
   const [profilePictureLink, setProfilePictureLink] = useState(
     "https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/defaultprofile.png?alt=media&token=80dd74fb-e94b-44ed-9085-7546d681ee80"
   );
-  const [dropdown, setDropdown] = useState(false)
+  const [dropdown, setDropdown] = useState(false);
 
   useEffect(() => {
     const fetchData = () => {
-      
-        setTimeout(async ()=>{
-          const imageURL = await storage
+      setTimeout(async () => {
+        const imageURL = await storage
           .ref("PostsImages/" + props.postObject.id + ".jpg")
-          .getDownloadURL()
-          
-  
-          setImageLink(imageURL);
+          .getDownloadURL();
 
-          try{
-            const profilePictureURL = await storage
+        setImageLink(imageURL);
+
+        try {
+          const profilePictureURL = await storage
             .ref("UsersProfiles/" + props.postObject.userData.id + ".jpg")
             .getDownloadURL();
-  
-            setProfilePictureLink(profilePictureURL);
-          }catch{}
 
-  
-        }, 1200)
-
+          setProfilePictureLink(profilePictureURL);
+        } catch {}
+      }, 1200);
     };
 
     fetchData();
   }, []);
 
   return (
-  
-    <TouchableWithoutFeedback style={styles.post} onPress={()=>setDropdown(false)}> 
+    <TouchableWithoutFeedback
+      style={styles.post}
+      onPress={() => setDropdown(false)}
+    >
       <View style={styles.header}>
         <Image
           style={styles.profilePicture}
@@ -59,15 +56,15 @@ export default function Post(props) {
           </Text>
         </View>
         <Ionicons
-            style={styles.more}
-            name="ellipsis-vertical-outline"
-            size={30}
-            color="black"
-            onPress={()=>setDropdown(!dropdown)}
-          />
-          <PostOptions id={props.postObject.id} display={dropdown}/>
+          style={styles.more}
+          name="ellipsis-vertical-outline"
+          size={30}
+          color="black"
+          onPress={() => setDropdown(!dropdown)}
+        />
+        <PostOptions id={props.postObject.id} display={dropdown} />
       </View>
-      
+
       <Image style={styles.image} source={{ uri: imageLink }}></Image>
 
       <View style={styles.buttons}>
@@ -144,8 +141,8 @@ const styles = StyleSheet.create({
     fontSize: 23,
   },
 
-  more:{
-    marginLeft: 'auto',
+  more: {
+    marginLeft: "auto",
     marginRight: 10,
     fontSize: 24,
     padding: 10,
