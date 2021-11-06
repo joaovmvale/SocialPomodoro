@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Button } from "react-native";
+import { Image } from "react-native";
 
 import Home from "../pages/Home";
 import Feed from "../pages/Feed";
@@ -10,16 +10,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { Ionicons } from "@expo/vector-icons";
 
-const AppStack = createBottomTabNavigator();
+const AppTab = createBottomTabNavigator();
 
 export default function AppRoutes() {
   return (
-    <AppStack.Navigator
-      initialRouteName="Feed"
-
+    <AppTab.Navigator
+      initialRouteName="Pomodoro"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ size, specificStyle, color }) => {
-          let isIcon = true
+          let isIcon = true;
           let iconName;
 
           switch (route.name) {
@@ -35,13 +34,11 @@ export default function AppRoutes() {
               iconName = "stopwatch-outline";
               size = 40;
               specificStyle = {
-
                 backgroundColor: "#292f36",
                 borderRadius: 200,
                 marginBottom: 20,
-                padding: 8
-
-              }
+                padding: 8,
+              };
               break;
             case "AddPost":
               iconName = "add-circle-outline";
@@ -49,37 +46,47 @@ export default function AppRoutes() {
               break;
             case "Profile":
               isIcon = false;
-              size = 30
+              size = 30;
               break;
-            
-
             default:
               iconName = "help";
               break;
           }
 
-          if(isIcon)
-            return <Ionicons name={iconName} size={size} style={specificStyle} color={color}/>
+          if (isIcon)
+            return (
+              <Ionicons
+                name={iconName}
+                size={size}
+                style={specificStyle}
+                color={color}
+              />
+            );
           else
-           return <Image style={{width: size, height: size}} source={require('../../../assets/favicon.png')} />
+            return (
+              <Image
+                style={{ width: size, height: size }}
+                source={require("../../../assets/favicon.png")}
+              />
+            );
         },
-        tabBarActiveTintColor: 'white',
-        tabBarInactiveTintColor: '#b4b4b4',
+        headerShown: false,
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: "#b4b4b4",
         tabBarShowLabel: false,
         tabBarStyle: {
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "#292f36",
-          color: 'black'
+          color: "black",
         },
-        
       })}
     >
-      <AppStack.Screen name="Feed" component={Feed}/>
-      <AppStack.Screen name="Chat" component={Feed} />
-      <AppStack.Screen name="Pomodoro" component={Pomodoro} />
-      <AppStack.Screen name="AddPost" component={AddPost} />
-      <AppStack.Screen name="Profile" component={Home} />
-    </AppStack.Navigator>
+      <AppTab.Screen name="Feed" component={Feed} />
+      <AppTab.Screen name="Chat" component={Feed} />
+      <AppTab.Screen name="Pomodoro" component={Pomodoro} />
+      <AppTab.Screen name="AddPost" component={AddPost} />
+      <AppTab.Screen name="Profile" component={Home} />
+    </AppTab.Navigator>
   );
 }

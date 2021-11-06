@@ -8,7 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import Styles from "./style";
 
-export default function Pomodoro() {
+export default function Pomodoro({ navigation }) {
   const [minutes, setMinutes] = useState(25);
   const [seconds, setSeconds] = useState(0);
   const [breakTime, setBreakTime] = useState(5);
@@ -16,6 +16,8 @@ export default function Pomodoro() {
   const [isRunning, setIsRunning] = useState(false);
   const [initalMinutes, setinitalMinutes] = useState(0);
   const [progress, setProgress] = useState(100);
+  const [modalVisible, setModalVisible] = useState(false);
+  const containerStyle = { backgroundColor: "white", padding: 20 };
 
   useEffect(() => {
     if (isRunning) {
@@ -38,17 +40,20 @@ export default function Pomodoro() {
     }
   });
 
+  function openDrawer() {
+    navigation.navigate("PomodoroDrawer", {
+      screen: "PomodoroPreSave",
+    });
+  }
+
   function startTimer() {
     setIsRunning(!isRunning);
     setinitalMinutes(minutes);
-    setTimeout(() => {
-
-    },)
-
+    setTimeout(() => {});
   }
 
   function resetTimer() {
-    setMinutes(0);
+    setMinutes(25);
     setSeconds(0);
     setBreakTime(breakTime);
     setDisplayMessage(false);
@@ -69,7 +74,7 @@ export default function Pomodoro() {
           percent={progress}
           radius={70}
           borderWidth={9}
-          color="#28A745"
+          color="#0DB9AF"
           shadowColor="#DC3545"
           bgColor="#FFFFFF"
         >
@@ -114,15 +119,6 @@ export default function Pomodoro() {
           onPress={() => resetTimer()}
         >
           RESETAR
-        </Button>
-      </View>
-      <View style={Styles.pomodoroContainer}>
-        <Button
-          style={Styles.buttonPomodoro}
-          mode="contained"
-          onPress={() => alert("Configurações")}
-        >
-          <Ionicons name="rocket-outline" size={20} color="white" />+
         </Button>
       </View>
     </View>
