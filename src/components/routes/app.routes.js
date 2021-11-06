@@ -5,17 +5,30 @@ import Home from "../pages/Home";
 import Feed from "../pages/Feed";
 import Pomodoro from "../pages/Pomodoro";
 import AddPost from "../pages/AddPost";
+import Chat from "../pages/Chat/index";
+import Conversation from "../pages/Chat/conversation";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import { Ionicons } from "@expo/vector-icons";
 
 const AppTab = createBottomTabNavigator();
+const AppStack = createStackNavigator();
+
+function ChatNavigator() {
+  return (
+    <AppStack.Navigator>
+      <AppStack.Screen name="Chat" component={Chat} />
+      <AppStack.Screen name="Conversation" component={Conversation} />
+    </AppStack.Navigator>
+  );
+}
 
 export default function AppRoutes() {
   return (
     <AppTab.Navigator
-      initialRouteName="Pomodoro"
+      initialRouteName="Feed"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ size, specificStyle, color }) => {
           let isIcon = true;
@@ -26,7 +39,7 @@ export default function AppRoutes() {
               iconName = "home-outline";
               size = 30;
               break;
-            case "Chat":
+            case "ChatNavigator":
               iconName = "chatbubbles-outline";
               size = 30;
               break;
@@ -70,10 +83,10 @@ export default function AppRoutes() {
               />
             );
         },
-        headerShown: false,
         tabBarActiveTintColor: "white",
         tabBarInactiveTintColor: "#b4b4b4",
         tabBarShowLabel: false,
+        headerShown: false,
         tabBarStyle: {
           justifyContent: "center",
           alignItems: "center",
@@ -83,7 +96,7 @@ export default function AppRoutes() {
       })}
     >
       <AppTab.Screen name="Feed" component={Feed} />
-      <AppTab.Screen name="Chat" component={Feed} />
+      <AppTab.Screen name="ChatNavigator" component={ChatNavigator} />
       <AppTab.Screen name="Pomodoro" component={Pomodoro} />
       <AppTab.Screen name="AddPost" component={AddPost} />
       <AppTab.Screen name="Profile" component={Home} />
