@@ -8,7 +8,7 @@ export default function AddPost({navigation}) {
 
   const [description, setDescription] = useState('')
   const [image, setImage] = useState('https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/error-image-generic.png?alt=media&token=cac1d2ab-5df2-493b-8f76-ffc8abc65dbf')
-  const { user } = useContext(AuthContext);
+  const { user, addPost } = useContext(AuthContext);
 
 
   useEffect(() => {
@@ -42,16 +42,21 @@ export default function AddPost({navigation}) {
 
     try {
 
-      let docRef = await firebase
+      let userRef = firebase
       .firestore()
       .collection("Users")
       .doc(user.uid)
+
+      let docRef = userRef
       .collection("Posts")
       .doc()
 
       let id = docRef.id
-  
       docRef.set({id, description})
+
+      let userDoc = await userRef.get()
+      let postDoc = await docRef.get()
+      var postObject = {...postDoc.data(), userData: userDoc.data() }
 
       if(image){    
 
@@ -65,6 +70,8 @@ export default function AddPost({navigation}) {
     } catch (error) {
       Alert.alert("Erro", error.message);
     }
+
+    addPost(postObject)
 
     navigation.navigate('Feed')
 
@@ -91,11 +98,11 @@ const styles = StyleSheet.create({
   addPost: {
     marginRight: 0,
     width: "100%",
-    paddingTop: 20,
     backgroundColor: "white",
     paddingBottom: 30,
     height: Dimensions.get('window').height,
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   input:{
 

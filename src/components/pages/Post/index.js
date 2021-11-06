@@ -13,7 +13,7 @@ export default function Post(props) {
     "https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/error-image-generic.png?alt=media&token=cac1d2ab-5df2-493b-8f76-ffc8abc65dbf"
   );
   const [profilePictureLink, setProfilePictureLink] = useState(
-    "https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/error-image-generic.png?alt=media&token=cac1d2ab-5df2-493b-8f76-ffc8abc65dbf"
+    "https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/defaultprofile.png?alt=media&token=80dd74fb-e94b-44ed-9085-7546d681ee80"
   );
   const [dropdown, setDropdown] = useState(false)
 
@@ -27,13 +27,17 @@ export default function Post(props) {
           
   
           setImageLink(imageURL);
-          const profilePictureURL = await storage
+
+          try{
+            const profilePictureURL = await storage
             .ref("UsersProfiles/" + props.postObject.userData.id + ".jpg")
             .getDownloadURL();
   
-          setProfilePictureLink(profilePictureURL);
+            setProfilePictureLink(profilePictureURL);
+          }catch{}
+
   
-        }, 3000)
+        }, 1200)
 
     };
 
@@ -41,7 +45,8 @@ export default function Post(props) {
   }, []);
 
   return (
-    <TouchableWithoutFeedback style={styles.post} >
+  
+    <TouchableWithoutFeedback style={styles.post} onPress={()=>setDropdown(false)}> 
       <View style={styles.header}>
         <Image
           style={styles.profilePicture}
@@ -60,7 +65,7 @@ export default function Post(props) {
             color="black"
             onPress={()=>setDropdown(!dropdown)}
           />
-          {dropdown ? <PostOptions id={props.postObject.id}/> : <View/>}
+          <PostOptions id={props.postObject.id} display={dropdown}/>
       </View>
       
       <Image style={styles.image} source={{ uri: imageLink }}></Image>
@@ -81,7 +86,7 @@ export default function Post(props) {
         <Text style={styles.likes}>Curtido por: Samuel, Josh e Mike</Text>
       </View>
 
-      <View style={styles.descriptionView} onp>
+      <View style={styles.descriptionView}>
         <Text style={styles.description}>
           <Text style={styles.descriptionName}>
             {props.postObject.userData.name}:{" "}

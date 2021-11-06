@@ -1,35 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 
 import Post from "../Post";
-import firebase from "../../utils/Firebase";
-
-const firestore = firebase.firestore();
+import AuthContext from "../../contexts/auth";
 
 export default function Feed() {
-  const [posts, setPosts] = useState([]);
+  const {posts, loadPosts} = useContext(AuthContext);
 
   useEffect(() => {
-    
-    firestore.collection("Users").onSnapshot((usersSnapshot) => {
 
-      usersSnapshot.forEach(async (userDoc) => {
-        await userDoc.ref
-          .collection("Posts").onSnapshot(postsSnapshot=>{
-            let list = [];
-            setPosts([])
-            postsSnapshot.forEach(async (postDoc) => {
-    
-              list.unshift({ ...postDoc.data(), userData: userDoc.data() });
-              setPosts(list);
-              
-            });
-          })
-      });
-    });
+    loadPosts()
+
   }, []);
 
   return (
+
     <View style={styles.feed}>
       <FlatList
         showsVerticalScrollIndicator={true}
@@ -39,8 +24,11 @@ export default function Feed() {
         }}
       />
     </View>
-  );
+   
+  )
 }
+
+
 
 const styles = StyleSheet.create({
   feed: {

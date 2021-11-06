@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Feed from "../pages/Feed";
 import Pomodoro from "../pages/Pomodoro";
 import AddPost from "../pages/AddPost";
+import Chat from '../pages/Chat/index'
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -66,6 +67,7 @@ export default function AppRoutes() {
         tabBarActiveTintColor: 'white',
         tabBarInactiveTintColor: '#b4b4b4',
         tabBarShowLabel: false,
+        headerShown: false,
         tabBarStyle: {
           justifyContent: "center",
           alignItems: "center",
@@ -76,7 +78,7 @@ export default function AppRoutes() {
       })}
     >
       <AppStack.Screen name="Feed" component={Feed}/>
-      <AppStack.Screen name="Chat" component={Feed} />
+      <AppStack.Screen name="Chat" component={Chat} />
       <AppStack.Screen name="Pomodoro" component={Pomodoro} />
       <AppStack.Screen name="AddPost" component={AddPost} />
       <AppStack.Screen name="Profile" component={Home} />

@@ -1,16 +1,15 @@
 import React, { useContext } from "react";
-import { StyleSheet, View, Button,Text, Image } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { StyleSheet, View, Button } from "react-native";
 import firebase from '../../utils/Firebase'
 import AuthContext from "../../contexts/auth";
 
 export default function PostOptions(props) {
 
-  const { user } = useContext(AuthContext);
+  const { user, deletePostCTX } = useContext(AuthContext);
 
-  async function deletePost(e){
+  async function deletePost(){
 
-    e.preventDefault()
+    deletePostCTX(props.id)
 
     try{
       await firebase.firestore()
@@ -29,10 +28,11 @@ export default function PostOptions(props) {
   }
  
   return (
-    <View style={styles.options}>
+    <View style={props.display ? styles.options : {display: 'none'}}>
         <Button style={styles.buttonOption} title="Apagar Post" color="black" onPress={deletePost}></Button>
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({
