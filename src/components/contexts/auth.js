@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, createContext, useEffect } from "react";
-
 import firebase from "../utils/Firebase";
 
 const AuthContext = createContext();
@@ -9,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState();
+  const [currentChat, setCurrentChat] = useState('')
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -22,29 +22,46 @@ export const AuthProvider = ({ children }) => {
     });
   });
 
+  useEffect(()=>{
+
+    loadPosts()
+
+  }, [])
+
+  function changeCurrentChat(conversationID){
+
+    setCurrentChat(conversationID)
+
+
+  }
+  
   async function loadPosts(){
 
-    let list = []
     const usersSnapshot = await firebase.firestore().collection("Users").get()
     usersSnapshot.forEach(async user=>{
 
-      const postsSnapshot = await user.ref.collection("Posts").get()
+      await user.ref.collection("Posts").onSnapshot(postsSnapshot=>{
 
-      postsSnapshot.forEach(post=>{
+        postsSnapshot.forEach(post=>{
 
-        list.unshift({...post.data(), userData:user.data()})
-        setPosts(list)
+          let postData = post.data()
+          let userData = user.data()
+
+          let postObject = {...postData, userData}
+
+          if(!posts.includes(postObject)){
+
+            setPosts([...posts, postObject])
+            
+          }
+
+        })
 
       })
 
+
+
     })
-  
-  }
-
-  async function addPost(newPost){
-
-    let list = [newPost, ...posts]
-    setPosts(list)
 
   }
 
@@ -66,9 +83,10 @@ export const AuthProvider = ({ children }) => {
     isLoggedIn,
     posts,
     user,
+    currentChat,
     loadPosts,
-    addPost,
-    deletePostCTX
+    deletePostCTX,
+    changeCurrentChat
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

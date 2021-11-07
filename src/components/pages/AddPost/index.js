@@ -8,7 +8,7 @@ export default function AddPost({navigation}) {
 
   const [description, setDescription] = useState('')
   const [image, setImage] = useState('https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/error-image-generic.png?alt=media&token=cac1d2ab-5df2-493b-8f76-ffc8abc65dbf')
-  const { user, addPost } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
 
   useEffect(() => {
@@ -71,7 +71,6 @@ export default function AddPost({navigation}) {
       Alert.alert("Erro", error.message);
     }
 
-    addPost(postObject)
 
     navigation.navigate('Feed')
 
