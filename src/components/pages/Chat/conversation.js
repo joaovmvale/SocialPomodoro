@@ -71,12 +71,13 @@ export default function Conversation() {
     style={{flex: 1}}
     behavior={Platform.OS === "ios" ? "padding" : "height"}
      keyboardVerticalOffset={130}
+     enabled
      >
       
-      <View style={{flex:1}} >
+      <View style={styles.messages}>
 
         <FlatList
-          style={styles.messages}
+         
           showsVerticalScrollIndicator={false}
           data={messages}
           renderItem={({ item }) => {
@@ -84,13 +85,13 @@ export default function Conversation() {
           }}
         />
 
-        <View style={styles.inputView}>
+      </View>
+
+      <View style={styles.inputView}>
             <TextInput style={styles.input} 
             placeholder="Escreva algo" onChangeText={setNewMessage} value={newMessage}></TextInput>
             <Ionicons style={styles.button} name="paper-plane-outline" size={26} onPress={sendMessage}></Ionicons>
-        </View>
       </View>
-
 
     </KeyboardAvoidingView>
 
@@ -99,8 +100,12 @@ export default function Conversation() {
 
 const styles = StyleSheet.create({
 
+
   messages:{
     padding: 25,
+    paddingTop: 5,
+    paddingBottom: 1,
+    maxHeight: Dimensions.get('window').height - 180
   },  
   inputView:{
     justifyContent: 'center',
