@@ -27,6 +27,7 @@ export default function Chat() {
             peopleInvolved[0] == user.uid
               ? peopleInvolved[1]
               : peopleInvolved[0];
+
           let conversationObject = {
             id: conversation.data().id,
             otherUserID,
@@ -58,7 +59,7 @@ export default function Chat() {
       let userRef = await firebase
         .firestore()
         .collection("Users")
-        .doc(user.uid);
+        .doc(personID);
 
       let userDoc = await userRef.get();
       return userDoc.data().name;
