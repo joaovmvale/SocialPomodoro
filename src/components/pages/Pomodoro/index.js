@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
 
-import ReactNativeAN from 'react-native-alarm-notification';
+import BackgroundTimer from 'react-native-background-timer';
 import Slider from "@react-native-community/slider";
 import ProgressCircle from "react-native-progress-circle";
 
@@ -41,7 +41,7 @@ export default function Pomodoro() {
   function startTimer() {
     setIsRunning(!isRunning);
     setinitalMinutes(minutes);
-    setTimeout(() => { });
+    BackgroundTimer.start();
   }
 
   function resetTimer() {

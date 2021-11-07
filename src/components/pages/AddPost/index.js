@@ -27,7 +27,6 @@ export default function AddPost({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      console.log(user);
       if (Platform.OS !== "web") {
         const { status } =
           await ImagePicker.requestMediaLibraryPermissionsAsync();

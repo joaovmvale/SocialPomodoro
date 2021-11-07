@@ -22,38 +22,33 @@ export const AuthProvider = ({ children }) => {
     });
   });
 
-  async function loadPosts(){
+  async function loadPosts() {
 
     let list = []
     const usersSnapshot = await firebase.firestore().collection("Users").get()
-    usersSnapshot.forEach(async user=>{
-
+    usersSnapshot.forEach(async user => {
       const postsSnapshot = await user.ref.collection("Posts").get()
 
-      postsSnapshot.forEach(post=>{
-
-        list.unshift({...post.data(), userData:user.data()})
+      postsSnapshot.forEach(post => {
+        list.unshift({ ...post.data(), userData: user.data() })
         setPosts(list)
-
       })
-
     })
-  
   }
 
-  async function addPost(newPost){
+  async function addPost(newPost) {
 
     let list = [newPost, ...posts]
     setPosts(list)
 
   }
 
-  function deletePostCTX(postID){
+  function deletePostCTX(postID) {
 
     let list = []
-    posts.forEach(post=>{
+    posts.forEach(post => {
 
-      if(post.id != postID)
+      if (post.id != postID)
         list.push(post)
 
     })

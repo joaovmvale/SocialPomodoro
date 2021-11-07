@@ -83,9 +83,7 @@ export default function AppRoutes() {
             return (
               <Image
                 style={{ width: size, height: size, borderRadius: size / 2 }}
-                source={user.photoURL
-                  ? { uri: user.photoURL }
-                  : require("../../../assets/favicon.png")}
+                source={require("../../../assets/favicon.png")}
               />
             );
         },
