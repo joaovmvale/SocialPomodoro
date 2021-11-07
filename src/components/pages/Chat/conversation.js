@@ -49,17 +49,18 @@ export default function Conversation() {
       let list = []
       messagesSnapshot.forEach(message=>{
 
-        let messageOBJ = {...message.data()}
-        messageOBJ.createdTime = new Date(message.data().createdTime.seconds * 1000)
+        let messageTimeSeconds = message.data().createdTime.seconds
+        let messageOBJ = {...message.data(), messageTimeSeconds}
+        messageOBJ.createdTime = new Date(messageTimeSeconds * 1000)
 
         list.unshift(messageOBJ)  
-        setMessages(list)
+        list.sort((a, b)=>{return a.messageTimeSeconds - b.messageTimeSeconds})
+        setMessages([...list])
 
       })
 
     })
   }
-
 
   return (
     <View style={styles.conversation}>

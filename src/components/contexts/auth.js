@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [currentChat, setCurrentChat] = useState('')
 
   useEffect(() => {
+ 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
@@ -20,18 +21,16 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
       }
     });
-  });
-
-  useEffect(()=>{
 
     loadPosts()
+    
+  }, []);
 
-  }, [])
+
 
   function changeCurrentChat(conversationID){
 
     setCurrentChat(conversationID)
-
 
   }
   
