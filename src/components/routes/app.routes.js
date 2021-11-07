@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Image } from "react-native";
 
 import Home from "../pages/Home";
@@ -10,6 +10,8 @@ import Conversation from "../pages/Chat/conversation";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
+
+import AuthContext from "../contexts/auth";
 
 import { Ionicons } from "@expo/vector-icons";
 
@@ -26,6 +28,8 @@ function ChatNavigator() {
 }
 
 export default function AppRoutes() {
+  const { user } = useContext(AuthContext);
+
   return (
     <AppTab.Navigator
       initialRouteName="Feed"
@@ -78,13 +82,16 @@ export default function AppRoutes() {
           else
             return (
               <Image
-                style={{ width: size, height: size }}
-                source={require("../../../assets/favicon.png")}
+                style={{ width: size, height: size, borderRadius: size / 2 }}
+                source={user.photoURL
+                  ? { uri: user.photoURL }
+                  : require("../../../assets/favicon.png")}
               />
             );
         },
         tabBarActiveTintColor: "white",
         tabBarInactiveTintColor: "#b4b4b4",
+        tabBarActiveBackgroundColor: "#292f46",
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
