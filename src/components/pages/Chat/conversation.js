@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, Alert, StyleSheet, Dimensions, FlatList } from "react-native";
+import { View, Text, Alert, StyleSheet, Dimensions, FlatList, KeyboardAvoidingView } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 
 import firebase from "../../utils/Firebase";
@@ -7,6 +7,7 @@ import AuthContext from "../../contexts/auth";
 import { Ionicons } from "@expo/vector-icons";
 
 import Message from "./message"
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function Conversation() {
 
@@ -20,7 +21,9 @@ export default function Conversation() {
 
   }, [])
 
-  function sendMessage(){
+  function sendMessage(e){
+
+    e.stopPropagation()
 
     let docRef = firebase.firestore().collection('Conversations').doc(currentChat).
     collection('Messages').doc()
@@ -38,6 +41,7 @@ export default function Conversation() {
 
     docRef.set(messageObject)
 
+    setNewMessage('')
 
   } 
 
@@ -63,45 +67,53 @@ export default function Conversation() {
   }
 
   return (
-    <View style={styles.conversation}>
-      <View style={styles.messages}>
-        <FlatList
-            showsVerticalScrollIndicator={true}
+    <KeyboardAvoidingView 
+    style={{flex: 1}}
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+     keyboardVerticalOffset={130}
+     >
+      
+      <View style={{flex:1}} >
+        <ScrollView style={styles.messages}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
             data={messages}
             renderItem={({ item }) => {
               return <Message messageOBJ={item}></Message>;
             }}
           />
+        </ScrollView>
+      
+        
+        <View style={styles.inputView}>
+            <TextInput style={styles.input} 
+            placeholder="Escreva algo" onChangeText={setNewMessage} value={newMessage}></TextInput>
+            <Ionicons style={styles.button} name="paper-plane-outline" size={26} onPress={sendMessage}></Ionicons>
+        </View>
       </View>
-       
-      <View style={styles.inputView}>
-        <TextInput placeholder="Escreva algo" onChangeText={setNewMessage}></TextInput>
-        <Ionicons style={styles.button} name="paper-plane-outline" size={26} onPress={sendMessage}></Ionicons>
-      </View>
-  
-    </View>
+
+
+    </KeyboardAvoidingView>
+
   );
 }
 
 const styles = StyleSheet.create({
-  conversation: {
-    height: Dimensions.get('window').height - 160
-  },
-  inputView:{
 
-    marginTop: 'auto',
-    position: 'relative',
-    justifyContent: 'center'
-
-  },
   messages:{
-    height: Dimensions.get('window').height - 200,
-    padding: 25
+    padding: 25,
   },  
+  inputView:{
+    justifyContent: 'center',
+  },
+  input:{
+    height: 55
+  },
   button:{
 
     position: 'absolute',
-    right: 18,
+    right: 10,
+    padding: 20,
 
   }
 });
