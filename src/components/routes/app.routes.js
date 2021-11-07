@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 const AppTab = createBottomTabNavigator();
 const AppStack = createStackNavigator();
 
+
 function ChatNavigator() {
   return (
     <AppStack.Navigator>
@@ -26,10 +27,13 @@ function ChatNavigator() {
 }
 
 export default function AppRoutes() {
+
   return (
     <AppTab.Navigator
+
       initialRouteName="Feed"
       screenOptions={({ route }) => ({
+        
         tabBarIcon: ({ size, specificStyle, color }) => {
           let isIcon = true;
           let iconName;
@@ -89,11 +93,12 @@ export default function AppRoutes() {
         tabBarShowLabel: false,
         headerShown: false,
         tabBarStyle: {
+          
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "#292f36",
           color: "black",
-        },
+        }
       })}
     >
       <AppTab.Screen name="Feed" component={Feed} />

@@ -74,17 +74,16 @@ export default function Conversation() {
      >
       
       <View style={{flex:1}} >
-        <ScrollView style={styles.messages}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={messages}
-            renderItem={({ item }) => {
-              return <Message messageOBJ={item}></Message>;
-            }}
-          />
-        </ScrollView>
-      
-        
+
+        <FlatList
+          style={styles.messages}
+          showsVerticalScrollIndicator={false}
+          data={messages}
+          renderItem={({ item }) => {
+            return <Message messageOBJ={item}></Message>;
+          }}
+        />
+
         <View style={styles.inputView}>
             <TextInput style={styles.input} 
             placeholder="Escreva algo" onChangeText={setNewMessage} value={newMessage}></TextInput>
