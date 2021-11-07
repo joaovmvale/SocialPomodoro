@@ -19,6 +19,9 @@ export default function Conversation() {
 
     loadMessages()
 
+    console.log()
+
+
   }, [])
 
   function sendMessage(e){
@@ -33,7 +36,7 @@ export default function Conversation() {
     let messageObject = {
     
       id: docID,
-      createdTime: new Date(),
+      createdTime: firebase.firestore.Timestamp.now(),
       message: newMessage,
       userID: user.uid
 
