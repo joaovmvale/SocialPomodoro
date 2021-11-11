@@ -3,37 +3,51 @@ import { StyleSheet } from "react-native";
 const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#34495e",
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  containerCentralizer:{
+    width: '70%',
     alignItems: "center",
     justifyContent: "center",
   },
   title: {
     fontSize: 30,
-    color: "#fff",
-    marginBottom: 20,
+    width: '100%',
+    textAlign: 'center',
+    color: "black",
+    marginBottom: 50,
   },
   input: {
-    width: "70%",
+    width: "100%",
     borderRadius: 5,
     padding: 5,
     backgroundColor: "#fff",
   },
+  buttons:{
+    marginTop: 8,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },  
   button: {
     backgroundColor: "#1abc9c",
-    width: "40%",
-    height: 50,
+    width: 80,
+    height: 40,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 5,
     margin: 5,
+    marginLeft: 'auto'
+  },
+  text:{
+    color: 'black',
+    marginTop: 90
   },
   forgotPassword: {
-    backgroundColor: "transparent",
-    width: "60%",
-    height: 20,
-    marginTop: 15,
-    alignItems: "center",
-    justifyContent: "center",
+    color: 'black',
+    marginRight: 40,
+    fontSize: 14
   },
   buttonLabel: {
     color: "white",

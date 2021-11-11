@@ -80,8 +80,9 @@ export default function AddPost({ navigation }) {
       Alert.alert("Erro", error.message);
     }
 
-    addPost(postObject);
-    navigation.navigate("Feed");
+
+    navigation.navigate('Feed')
+
   }
 
   return (

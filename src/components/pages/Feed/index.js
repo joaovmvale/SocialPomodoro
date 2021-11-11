@@ -5,11 +5,7 @@ import Post from "../Post";
 import AuthContext from "../../contexts/auth";
 
 export default function Feed() {
-  const { posts, loadPosts } = useContext(AuthContext);
-
-  useEffect(() => {
-    loadPosts();
-  }, []);
+  const {posts} = useContext(AuthContext);
 
   return (
     <View style={styles.feed}>

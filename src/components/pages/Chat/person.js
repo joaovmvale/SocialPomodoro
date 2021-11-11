@@ -9,13 +9,20 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Person(props) {
-  const { user } = useContext(AuthContext);
+  const { changeCurrentChat } = useContext(AuthContext);
   const navigation = useNavigation();
+
+  function openConversation(){
+
+    changeCurrentChat(props.conversationObject.id)
+    navigation.navigate("Conversation")
+
+  }
 
   return (
     <TouchableOpacity
       style={styles.person}
-      onPress={() => navigation.navigate("Conversation")}
+      onPress={openConversation}
     >
       <Image
         style={styles.otherUserPic}

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Image } from "react-native";
 
 import Home from "../pages/Home";
@@ -11,29 +11,29 @@ import Conversation from "../pages/Chat/conversation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import AuthContext from "../contexts/auth";
-
 import { Ionicons } from "@expo/vector-icons";
 
 const AppTab = createBottomTabNavigator();
 const AppStack = createStackNavigator();
 
+
 function ChatNavigator() {
   return (
     <AppStack.Navigator>
-      <AppStack.Screen name="Chat" component={Chat} />
+      <AppStack.Screen name="Chat" component={Chat} options={{ headerShown: false }} />
       <AppStack.Screen name="Conversation" component={Conversation} />
     </AppStack.Navigator>
   );
 }
 
 export default function AppRoutes() {
-  const { user } = useContext(AuthContext);
 
   return (
     <AppTab.Navigator
+
       initialRouteName="Feed"
       screenOptions={({ route }) => ({
+
         tabBarIcon: ({ size, specificStyle, color }) => {
           let isIcon = true;
           let iconName;
@@ -92,12 +92,13 @@ export default function AppRoutes() {
         tabBarActiveBackgroundColor: "#292f46",
         tabBarShowLabel: false,
         headerShown: false,
+        tabBarHideOnKeyboardDismiss: false,
         tabBarStyle: {
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "#292f36",
           color: "black",
-        },
+        }
       })}
     >
       <AppTab.Screen name="Feed" component={Feed} />

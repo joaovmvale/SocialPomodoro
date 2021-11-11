@@ -1,6 +1,4 @@
-import React from "react";
-import { useState, createContext, useEffect } from "react";
-
+import React, { useState, createContext, useEffect } from "react";
 import firebase from "../utils/Firebase";
 
 const AuthContext = createContext();
@@ -9,8 +7,10 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState();
+  const [currentChat, setCurrentChat] = useState('')
 
   useEffect(() => {
+
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
@@ -20,28 +20,61 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
       }
     });
-  });
+
+    loadPosts()
+  }, []);
+
+
+  function changeCurrentChat(conversationID) {
+
+    setCurrentChat(conversationID)
+
+  }
 
   async function loadPosts() {
 
-    let list = []
     const usersSnapshot = await firebase.firestore().collection("Users").get()
     usersSnapshot.forEach(async user => {
-      const postsSnapshot = await user.ref.collection("Posts").get()
 
-      postsSnapshot.forEach(post => {
-        list.unshift({ ...post.data(), userData: user.data() })
-        setPosts(list)
+      user.ref.collection("Posts").get().then(postsSnapshot => {
+        setPosts(postsSnapshot.docs.map(post => {
+
+          let postData = post.data()
+          let userData = user.data()
+
+          let postObject = { ...postData, userData }
+
+          return postObject
+
+        }))
       })
     })
-  }
-
-  async function addPost(newPost) {
-
-    let list = [newPost, ...posts]
-    setPosts(list)
 
   }
+
+  // async function watchPosts(){
+
+  //   const usersSnapshot = await firebase.firestore().collection("Users").get()
+  //   usersSnapshot.forEach(async user=>{
+
+  //     await user.ref.collection("Posts").onSnapshot(postsSnapshot=>{
+
+  //       postsSnapshot.docChanges().forEach(change=>{
+
+  //         let postData = change.doc.data()
+  //         let userData = user.data()
+
+  //         let postObject = {...postData, userData}
+
+  //         setPosts([...posts, postObject])
+
+  //       })
+
+  //     })
+
+  //   })
+
+  // }
 
   function deletePostCTX(postID) {
 
@@ -61,9 +94,10 @@ export const AuthProvider = ({ children }) => {
     isLoggedIn,
     posts,
     user,
+    currentChat,
     loadPosts,
-    addPost,
-    deletePostCTX
+    deletePostCTX,
+    changeCurrentChat
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -54,6 +54,8 @@ export default function Login({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={Styles.container}>
+        <View style={Styles.containerCentralizer}>
+
         <Text style={Styles.title}>SOCIAL POMODORO</Text>
         <TextInput
           autoCapitalize="none"
@@ -74,30 +76,34 @@ export default function Login({ navigation }) {
           value={password}
           onChangeText={(text) => setPassword(text)}
         />
-        <Button
-          style={Styles.forgotPassword}
-          labelStyle={Styles.buttonLabel}
-          mode="text"
-          onPress={forgotPassword}
-          loading={fLoading}
-        >
-          Esqueceu sua senha?
-        </Button>
-        <Button
-          style={Styles.button}
-          mode="contained"
-          loading={loading}
-          onPress={handleLogin}
-        >
-          Login
-        </Button>
-        <Button
-          style={Styles.button}
+        <View style={Styles.buttons}>
+          <Text
+            style={Styles.forgotPassword}
+            labelStyle={Styles.buttonLabel}
+            mode="text"
+            onPress={forgotPassword}
+            loading={fLoading}
+          >
+            Esqueceu sua senha?
+          </Text>
+          <Button
+            style={Styles.button}
+            mode="contained"
+            loading={loading}
+            onPress={handleLogin}
+          >
+            Login
+          </Button>
+        </View>
+        
+        <Text
+          style={Styles.text}
           mode="contained"
           onPress={() => navigation.navigate("Register")}
         >
-          Cadastrar
-        </Button>
+          Não possui uma conta?
+        </Text>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
