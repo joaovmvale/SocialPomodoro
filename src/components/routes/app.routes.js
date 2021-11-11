@@ -20,7 +20,7 @@ const AppStack = createStackNavigator();
 function ChatNavigator() {
   return (
     <AppStack.Navigator>
-      <AppStack.Screen name="Chat" component={Chat} />
+      <AppStack.Screen name="Chat" component={Chat} options={{headerShown: false}}/>
       <AppStack.Screen name="Conversation" component={Conversation} />
     </AppStack.Navigator>
   );

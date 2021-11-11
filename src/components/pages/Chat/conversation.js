@@ -8,8 +8,6 @@ import AuthContext from "../../contexts/auth";
 import { Ionicons } from "@expo/vector-icons";
 
 import Message from "./message"
-import { ScrollView } from "react-native-gesture-handler";
-
 export default function Conversation() {
 
   const [newMessage, setNewMessage] = useState('')
@@ -78,8 +76,7 @@ export default function Conversation() {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={130}
+      behavior="position"
       enabled
     >
 
@@ -114,19 +111,26 @@ const styles = StyleSheet.create({
     padding: 25,
     paddingTop: 5,
     paddingBottom: 1,
+    height: Dimensions.get('window').height - 180,
     maxHeight: Dimensions.get('window').height - 180
   },
   inputView: {
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 50
   },
   input: {
-    height: 55
+    width: '80%',
+    height: '100%',
+
   },
   button: {
 
-    position: 'absolute',
-    right: 10,
-    padding: 20,
+    width: '20%',
+    height: '100%',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    backgroundColor: "#e7e7e7"
 
   }
 });
