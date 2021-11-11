@@ -40,7 +40,7 @@ export default function Conversation() {
     let messageObject = {
 
       id: docID,
-      createdTime: new Date(currenTime*1000),
+      createdTime: new Date(currenTime * 1000),
       message: newMessage,
       userID: user.uid
 
@@ -76,7 +76,7 @@ export default function Conversation() {
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
-      behavior="position"
+      behavior="padding"
       enabled
     >
 
@@ -105,8 +105,6 @@ export default function Conversation() {
 }
 
 const styles = StyleSheet.create({
-
-
   messages: {
     padding: 25,
     paddingTop: 5,
@@ -122,15 +120,12 @@ const styles = StyleSheet.create({
   input: {
     width: '80%',
     height: '100%',
-
   },
   button: {
-
     width: '20%',
     height: '100%',
     textAlign: 'center',
     textAlignVertical: 'center',
     backgroundColor: "#e7e7e7"
-
   }
 });

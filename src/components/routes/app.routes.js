@@ -20,7 +20,7 @@ const AppStack = createStackNavigator();
 function ChatNavigator() {
   return (
     <AppStack.Navigator>
-      <AppStack.Screen name="Chat" component={Chat} options={{headerShown: false}}/>
+      <AppStack.Screen name="Chat" component={Chat} options={{ headerShown: false }} />
       <AppStack.Screen name="Conversation" component={Conversation} />
     </AppStack.Navigator>
   );
@@ -33,7 +33,7 @@ export default function AppRoutes() {
 
       initialRouteName="Feed"
       screenOptions={({ route }) => ({
-        
+
         tabBarIcon: ({ size, specificStyle, color }) => {
           let isIcon = true;
           let iconName;
@@ -92,8 +92,8 @@ export default function AppRoutes() {
         tabBarInactiveTintColor: "#b4b4b4",
         tabBarShowLabel: false,
         headerShown: false,
+        tabBarHideOnKeyboardDismiss: false,
         tabBarStyle: {
-          
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "#292f36",
@@ -101,7 +101,7 @@ export default function AppRoutes() {
         }
       })}
     >
-      <AppTab.Screen name="Feed" component={Feed}/>
+      <AppTab.Screen name="Feed" component={Feed} />
       <AppTab.Screen name="ChatNavigator" component={ChatNavigator} />
       <AppTab.Screen name="Pomodoro" component={Pomodoro} />
       <AppTab.Screen name="AddPost" component={AddPost} />

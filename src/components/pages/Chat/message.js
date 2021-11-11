@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, Text, Alert, StyleSheet, Dimensions, FlatList } from "react-native";
+import { View, Text, Alert, StyleSheet, Dimensions, FlatList, KeyboardAvoidingView } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { useEffect } from "react/cjs/react.development";
 
@@ -12,23 +12,23 @@ export default function Conversation(props) {
     const [userTextColor, setUserTextColor] = useState({})
     const [messageTime, setMessageTime] = useState('')
 
-    useEffect(()=>{
+    useEffect(() => {
 
         userStyle()
         createMessageTime()
 
     }, [])
 
-    function createMessageTime(){
+    function createMessageTime() {
 
-        let hours = props.messageOBJ.createdTime.getHours()
+        let hours = "0" + props.messageOBJ.createdTime.getHours()
         let minutes = props.messageOBJ.createdTime.getMinutes()
 
         let string = hours + ":" + minutes
         setMessageTime(string)
     }
 
-    function userStyle(){
+    function userStyle() {
 
         let userMessage = {
             alignSelf: 'flex-end',
@@ -39,8 +39,8 @@ export default function Conversation(props) {
         let white = {
             color: 'white'
         }
-        
-        if(props.messageOBJ.userID == user.uid){
+
+        if (props.messageOBJ.userID == user.uid) {
             setUserMessage(userMessage)
             setUserTextColor(white)
         }
@@ -48,33 +48,33 @@ export default function Conversation(props) {
     }
 
     return (
-        <View style={{...styles.message, ...userMessage}}>
-            <Text style={{...userTextColor}}>{props.messageOBJ.message}</Text>
-            <Text style={{...styles.timeStamp, ...userTextColor}}>{messageTime}</Text>
-        </View>
+            <View style={{ ...styles.message, ...userMessage }}>
+                <Text style={{ ...userTextColor }}>{props.messageOBJ.message}</Text>
+                <Text style={{ ...styles.timeStamp, ...userTextColor }}>{messageTime}</Text>
+            </View>
     );
 }
 
 const styles = StyleSheet.create({
 
-  message: {
-    height: 20,
-    borderWidth: .3,
-    padding: 19,
-    alignItems: 'center',
-    borderRadius: 10,
-    alignSelf: 'flex-start',
-    marginBottom: 2,
-    flexDirection: 'row'
-  },
-  timeStamp:{
+    message: {
+        height: 20,
+        borderWidth: .3,
+        padding: 19,
+        alignItems: 'center',
+        borderRadius: 10,
+        alignSelf: 'flex-start',
+        marginBottom: 2,
+        flexDirection: 'row'
+    },
+    timeStamp: {
 
-    marginLeft: 10,
-    marginTop: 28,
-    fontSize: 12,
-    marginBottom: 20
+        marginLeft: 10,
+        marginTop: 28,
+        fontSize: 12,
+        marginBottom: 20
 
-  }
+    }
 
 
 });
