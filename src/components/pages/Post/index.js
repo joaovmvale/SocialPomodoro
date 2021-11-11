@@ -25,7 +25,6 @@ export default function Post(props) {
           .ref("PostsImages/" + props.postObject.id + ".jpg")
           .getDownloadURL()
           
-  
           setImageLink(imageURL);
 
           try{
@@ -95,17 +94,6 @@ export default function Post(props) {
         </Text>
       </View>
 
-      <View style={styles.commentaryView}>
-        <View style={styles.commentary}>
-          <Ionicons
-            style={styles.commentaryIcon}
-            name="chatbox-outline"
-            size={27}
-            color="black"
-          />
-          <Text>Adicione um comentário</Text>
-        </View>
-      </View>
     </TouchableWithoutFeedback>
   );
 }
@@ -114,7 +102,8 @@ const styles = StyleSheet.create({
   post: {
     width: "100%",
     alignItems: "center",
-    marginBottom: 50,
+    marginBottom: 10,
+    padding: 5
   },
 
   header: {
@@ -154,7 +143,7 @@ const styles = StyleSheet.create({
   descriptionView: {
     width: "100%",
     paddingLeft: 10,
-    marginTop: 9,
+    marginTop: 2
   },
 
   description: {
@@ -181,24 +170,4 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 
-  commentaryView: {
-    width: "98%",
-    alignItems: "center",
-    marginTop: 9,
-  },
-
-  commentary: {
-    width: "100%",
-    height: 50,
-    borderWidth: 0.8,
-    borderColor: "grey",
-    marginTop: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 8,
-    borderRadius: 2,
-  },
-  commentaryIcon: {
-    marginRight: 10,
-  },
 });

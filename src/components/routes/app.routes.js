@@ -101,7 +101,7 @@ export default function AppRoutes() {
         }
       })}
     >
-      <AppTab.Screen name="Feed" component={Feed} />
+      <AppTab.Screen name="Feed" component={Feed}/>
       <AppTab.Screen name="ChatNavigator" component={ChatNavigator} />
       <AppTab.Screen name="Pomodoro" component={Pomodoro} />
       <AppTab.Screen name="AddPost" component={AddPost} />

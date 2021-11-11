@@ -75,6 +75,8 @@ export default function Register({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={Styles.container}>
+        <View style={Styles.containerCentralizer}>
+
         <Text style={Styles.title}>Cadastro</Text>
         <TextInput
           style={Styles.input}
@@ -120,6 +122,8 @@ export default function Register({ navigation }) {
         >
           Cadastrar
         </Button>
+
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );

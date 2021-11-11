@@ -23,9 +23,10 @@ export const AuthProvider = ({ children }) => {
     });
 
     loadPosts()
+    //watchPosts()
+    
     
   }, []);
-
 
 
   function changeCurrentChat(conversationID){
@@ -38,31 +39,46 @@ export const AuthProvider = ({ children }) => {
 
     const usersSnapshot = await firebase.firestore().collection("Users").get()
     usersSnapshot.forEach(async user=>{
-
-      await user.ref.collection("Posts").onSnapshot(postsSnapshot=>{
-
-        postsSnapshot.forEach(post=>{
+  
+      user.ref.collection("Posts").get().then(postsSnapshot=>{
+        setPosts(postsSnapshot.docs.map(post=>{
 
           let postData = post.data()
           let userData = user.data()
 
           let postObject = {...postData, userData}
 
-          if(!posts.includes(postObject)){
+          return postObject
 
-            setPosts([...posts, postObject])
-            
-          }
-
-        })
-
+        }))
       })
-
-
-
     })
 
   }
+
+  // async function watchPosts(){
+
+  //   const usersSnapshot = await firebase.firestore().collection("Users").get()
+  //   usersSnapshot.forEach(async user=>{
+
+  //     await user.ref.collection("Posts").onSnapshot(postsSnapshot=>{
+
+  //       postsSnapshot.docChanges().forEach(change=>{
+
+  //         let postData = change.doc.data()
+  //         let userData = user.data()
+
+  //         let postObject = {...postData, userData}
+
+  //         setPosts([...posts, postObject])
+
+  //       })
+
+  //     })
+
+  //   })
+
+  // }
 
   function deletePostCTX(postID){
 
