@@ -10,7 +10,6 @@ export const AuthProvider = ({ children }) => {
   const [currentChat, setCurrentChat] = useState('')
 
   useEffect(() => {
-
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
@@ -22,6 +21,7 @@ export const AuthProvider = ({ children }) => {
     });
 
     loadPosts()
+
   }, []);
 
 
@@ -31,50 +31,55 @@ export const AuthProvider = ({ children }) => {
 
   }
 
-  async function loadPosts() {
-
-    const usersSnapshot = await firebase.firestore().collection("Users").get()
-    usersSnapshot.forEach(async user => {
-
-      user.ref.collection("Posts").get().then(postsSnapshot => {
-        setPosts(postsSnapshot.docs.map(post => {
-
-          let postData = post.data()
-          let userData = user.data()
-
-          let postObject = { ...postData, userData }
-
-          return postObject
-
-        }))
-      })
-    })
-
-  }
-
-  // async function watchPosts(){
+  // async function loadPosts() {
 
   //   const usersSnapshot = await firebase.firestore().collection("Users").get()
-  //   usersSnapshot.forEach(async user=>{
+  //   usersSnapshot.forEach(async user => {
 
-  //     await user.ref.collection("Posts").onSnapshot(postsSnapshot=>{
+  //     user.ref.collection("Posts").get().then(postsSnapshot => {
+  //       setPosts(postsSnapshot.docs.map(post => {
 
-  //       postsSnapshot.docChanges().forEach(change=>{
-
-  //         let postData = change.doc.data()
+  //         let postData = post.data()
   //         let userData = user.data()
 
-  //         let postObject = {...postData, userData}
+  //         let postObject = { ...postData, userData }
 
-  //         setPosts([...posts, postObject])
+  //         return postObject
 
-  //       })
-
+  //       }))
   //     })
-
   //   })
 
   // }
+
+  async function loadPosts(){
+
+    const usersSnapshot = await firebase.firestore().collection("Users").get()
+    usersSnapshot.forEach(async user=>{
+      let list = []
+      await user.ref.collection("Posts").onSnapshot(postsSnapshot=>{
+        postsSnapshot.docChanges().forEach(change=>{
+
+          if(change.type == 'added'){
+            let postData = change.doc.data()
+            let userData = user.data()
+  
+            let postObject = {...postData, userData}
+            
+            list.unshift(postObject)
+            
+          }
+
+          setPosts(list)
+
+ 
+        })
+
+      })
+
+    })
+
+  }
 
   function deletePostCTX(postID) {
 
