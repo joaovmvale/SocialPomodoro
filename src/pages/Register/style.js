@@ -6,25 +6,29 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  containerCentralizer:{
-
-    width: '80%',
+  scrollContainer: {
+    width: "100%",
+    height: "100%",
+  },
+  containerCentralizer: {
+    width: "100%",
+    padding: 10,
     justifyContent: "center",
     alignItems: "center",
-
   },
   title: {
-    width: '90%',
-    fontSize: 30,
     color: "black",
-    marginBottom: 40,
+    marginLeft: "-45%",
+    fontWeight: "bold",
+    fontSize: 30,
+    marginBottom: 30,
   },
   input: {
     borderWidth: 1,
     borderColor: "black",
-    width: "100%",
+    width: "75%",
     backgroundColor: "#fff",
-    height: 50,
+    height: 40,
     marginBottom: 10,
     padding: 10,
     color: "black",
@@ -32,20 +36,20 @@ const Styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#1abc9c",
-    width: 130,
-    height: 50,
     alignItems: "center",
     justifyContent: "center",
+    width: 130,
+    height: 50,
     borderRadius: 5,
     marginTop: 30,
-    marginLeft: 'auto'
+    marginLeft: "35%",
   },
   imageContainer: {
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    marginLeft: "-30%",
+    marginLeft: "-10%",
   },
   postImage: {
     width: 60,
@@ -54,7 +58,6 @@ const Styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: "black",
     backgroundColor: "white",
-    marginLeft: "5%",
   },
   postImageText: {
     fontSize: 15,

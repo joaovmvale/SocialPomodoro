@@ -19,16 +19,13 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
       }
     });
-
     loadPosts()
 
   }, []);
 
 
   function changeCurrentChat(conversationID) {
-
     setCurrentChat(conversationID)
-
   }
 
   // async function loadPosts() {
