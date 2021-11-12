@@ -42,7 +42,7 @@ const Styles = StyleSheet.create({
   },
   text:{
     color: 'black',
-    marginTop: 90
+    marginTop: 40
   },
   forgotPassword: {
     color: 'black',

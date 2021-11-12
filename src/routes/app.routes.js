@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Image } from "react-native";
 
-import Home from "../pages/Home";
+import Profile from "../pages/Profile";
 import Feed from "../pages/Feed";
 import Pomodoro from "../pages/Pomodoro";
 import AddPost from "../pages/AddPost";
 import Chat from "../pages/Chat/index";
 import Conversation from "../pages/Chat/conversation";
+
+import firebase from "../utils/Firebase";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -15,7 +17,6 @@ import { Ionicons } from "@expo/vector-icons";
 
 const AppTab = createBottomTabNavigator();
 const AppStack = createStackNavigator();
-
 
 function ChatNavigator() {
   return (
@@ -27,13 +28,18 @@ function ChatNavigator() {
 }
 
 export default function AppRoutes() {
+  const [avatar, setAvatar] = useState("https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/defaultprofile.png?alt=media&token=8292a6e7-7c5f-4295-bcf0-c083e3f4611e");
+
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      setAvatar(user.photoURL);
+    }
+  });
 
   return (
     <AppTab.Navigator
-
       initialRouteName="Feed"
       screenOptions={({ route }) => ({
-
         tabBarIcon: ({ size, specificStyle, color }) => {
           let isIcon = true;
           let iconName;
@@ -83,13 +89,12 @@ export default function AppRoutes() {
             return (
               <Image
                 style={{ width: size, height: size, borderRadius: size / 2 }}
-                source={require("../../../assets/favicon.png")}
+                source={{ uri: avatar }}
               />
             );
         },
         tabBarActiveTintColor: "white",
         tabBarInactiveTintColor: "#b4b4b4",
-        tabBarActiveBackgroundColor: "#292f46",
         tabBarShowLabel: false,
         headerShown: false,
         tabBarHideOnKeyboardDismiss: false,
@@ -105,7 +110,7 @@ export default function AppRoutes() {
       <AppTab.Screen name="ChatNavigator" component={ChatNavigator} />
       <AppTab.Screen name="Pomodoro" component={Pomodoro} />
       <AppTab.Screen name="AddPost" component={AddPost} />
-      <AppTab.Screen name="Profile" component={Home} />
-    </AppTab.Navigator>
+      <AppTab.Screen name="Profile" component={Profile} />
+    </AppTab.Navigator >
   );
 }

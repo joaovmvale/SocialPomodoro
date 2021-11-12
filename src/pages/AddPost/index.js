@@ -11,9 +11,7 @@ import {
 import { Button, Avatar, TextInput } from "react-native-paper";
 
 import firebase from "../../utils/Firebase";
-
 import AuthContext from "../../contexts/auth";
-
 import * as ImagePicker from "expo-image-picker";
 
 import Styles from "./style";
@@ -95,7 +93,7 @@ export default function AddPost({ navigation }) {
             source={
               user.photoURL
                 ? { uri: user.photoURL }
-                : require("../../../../assets/heart.png")
+                : require("../../../assets/heart.png")
             }
           />
           <Text style={Styles.profileName}>

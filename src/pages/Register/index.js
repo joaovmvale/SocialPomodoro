@@ -8,11 +8,14 @@ import {
   Keyboard,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from "react-native";
 import { Button } from "react-native-paper";
+
 import { TextInputMask } from "react-native-masked-text";
 import * as ImagePicker from "expo-image-picker";
-
 import firebase from "../../utils/Firebase";
 
 import Styles from "./style";
@@ -24,7 +27,7 @@ export default function Register({ navigation }) {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [birth, setBirth] = useState("");
   const [image, setImage] = useState(
-    "https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/default-upload-image.png.png?alt=media&token=8292a6e7-7c5f-4295-bcf0-c083e3f4611e"
+    "https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/defaultprofile.png?alt=media&token=8292a6e7-7c5f-4295-bcf0-c083e3f4611e"
   );
   const [loading, setLoading] = useState(false);
 
@@ -87,67 +90,69 @@ export default function Register({ navigation }) {
       setPasswordConfirm("");
       setBirth("");
     }
-
     setLoading(false);
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={Styles.container}>
-        <View style={Styles.containerCentralizer}>
-
-        <Text style={Styles.title}>Cadastro</Text>
-        <TextInput
-          style={Styles.input}
-          placeholder="Nome"
-          value={name}
-          onChangeText={(text) => setName(text)}
-        />
-        <TextInput
-          style={Styles.input}
-          placeholder="Email"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-        />
-        <TextInput
-          style={Styles.input}
-          placeholder="Senha"
-          secureTextEntry={true}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-        />
-        <TextInput
-          style={Styles.input}
-          placeholder="Confirmar senha"
-          secureTextEntry={true}
-          value={passwordConfirm}
-          onChangeText={(text) => setPasswordConfirm(text)}
-        />
-        <TextInputMask
-          type={"datetime"}
-          options={{
-            format: "DD/MM/YYYY",
-          }}
-          style={Styles.input}
-          placeholder="Data de nascimento"
-          value={birth}
-          onChangeText={(text) => setBirth(text)}
-        />
-        <TouchableOpacity style={Styles.imageContainer} onPress={pickImage}>
-          <Image style={Styles.postImage} source={{ uri: image }} />
-          <Text style={Styles.postImageText}>Imagem de perfil</Text>
-        </TouchableOpacity>
-        <Button
-          mode="contained"
-          style={Styles.button}
-          loading={loading}
-          onPress={handleRegister}
-        >
-          Cadastrar
-        </Button>
-
-        </View>
-      </View>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        style={Styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView style={Styles.scrollContainer}>
+          <View style={Styles.containerCentralizer}>
+            <Text style={Styles.title}>Cadastro</Text>
+            <TextInput
+              style={Styles.input}
+              placeholder="Nome"
+              value={name}
+              onChangeText={(text) => setName(text)}
+            />
+            <TextInput
+              style={Styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
+            />
+            <TextInput
+              style={Styles.input}
+              placeholder="Senha"
+              secureTextEntry={true}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+            />
+            <TextInput
+              style={Styles.input}
+              placeholder="Confirmar senha"
+              secureTextEntry={true}
+              value={passwordConfirm}
+              onChangeText={(text) => setPasswordConfirm(text)}
+            />
+            <TextInputMask
+              type={"datetime"}
+              options={{
+                format: "DD/MM/YYYY",
+              }}
+              style={Styles.input}
+              placeholder="Data de nascimento"
+              value={birth}
+              onChangeText={(text) => setBirth(text)}
+            />
+            <TouchableOpacity style={Styles.imageContainer} onPress={pickImage}>
+              <Image style={Styles.postImage} source={{ uri: image }} />
+              <Text style={Styles.postImageText}>Adicionar imagem de perfil</Text>
+            </TouchableOpacity>
+            <Button
+              mode="contained"
+              style={Styles.button}
+              loading={loading}
+              onPress={handleRegister}
+            >
+              Cadastrar
+            </Button>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 }

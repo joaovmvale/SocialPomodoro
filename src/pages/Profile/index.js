@@ -6,12 +6,8 @@ import { Button, TextInput } from "react-native-paper";
 
 import firebase from "../../utils/Firebase";
 
-import AuthContext from "../../contexts/auth";
-
-export default function Home() {
+export default function Profile() {
   const [description, setDescription] = useState("");
-
-  const { user } = useContext(AuthContext);
 
   async function handleLogout() {
     try {
@@ -22,7 +18,7 @@ export default function Home() {
   }
 
   async function handlePost() {
- 
+
   }
 
   return (
