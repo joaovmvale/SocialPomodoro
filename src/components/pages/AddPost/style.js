@@ -24,7 +24,7 @@ const Styles = StyleSheet.create({
   },
   postDescription: {
     width: "90%",
-    height: "30%",
+    height: 200,
     padding: 10,
     fontSize: 16,
     borderColor: "black",

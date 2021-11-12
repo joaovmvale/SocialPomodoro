@@ -17,13 +17,14 @@ import AuthContext from "../../contexts/auth";
 import * as ImagePicker from "expo-image-picker";
 
 import Styles from "./style";
+import axios from 'axios'
 
 export default function AddPost({ navigation }) {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(
     "https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/default-upload-image.png.png?alt=media&token=8292a6e7-7c5f-4295-bcf0-c083e3f4611e"
   );
-  const { user, addPost } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
@@ -57,10 +58,12 @@ export default function AddPost({ navigation }) {
       let docRef = userRef.collection("Posts").doc();
       let id = docRef.id;
 
-      docRef.set({ id, description });
-      let userDoc = await userRef.get();
-      let postDoc = await docRef.get();
-      var postObject = { ...postDoc.data(), userData: userDoc.data() };
+      let createdTime;
+      await axios.get("http://worldtimeapi.org/api/timezone/America/Sao_Paulo").then((res) => {
+        createdTime = new Date(res.data.unixtime * 1000);
+      })
+
+      docRef.set({ id, description, createdTime});
 
       if (image) {
         const response = await fetch(image);

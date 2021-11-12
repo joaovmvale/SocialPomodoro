@@ -55,9 +55,10 @@ export const AuthProvider = ({ children }) => {
   async function loadPosts(){
 
     const usersSnapshot = await firebase.firestore().collection("Users").get()
+    let list = []
     usersSnapshot.forEach(async user=>{
-      let list = []
-      await user.ref.collection("Posts").onSnapshot(postsSnapshot=>{
+
+      await user.ref.collection("Posts").orderBy('createdTime').onSnapshot(postsSnapshot=>{
         postsSnapshot.docChanges().forEach(change=>{
 
           if(change.type == 'added'){
@@ -68,10 +69,9 @@ export const AuthProvider = ({ children }) => {
             
             list.unshift(postObject)
             
-          }
+          } else if(change.type == 'removed'){}
 
           setPosts(list)
-
  
         })
 
