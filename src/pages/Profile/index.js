@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
-import { View, Text, Alert, Image } from "react-native";
-import { Button, Avatar } from "react-native-paper";
+import { View, Text, Alert } from "react-native";
+import { Avatar, Button } from "react-native-paper";
 import AuthContext from "../../contexts/auth";
 
 import firebase from "../../utils/Firebase";
@@ -13,6 +13,7 @@ export default function Profile() {
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
+      console.log(user);
       setAvatar(user.photoURL);
     }
   });
@@ -27,15 +28,22 @@ export default function Profile() {
 
   return (
     <View style={Styles.container}>
-      <Avatar.Image
-        style={Styles.profileAvatar}
-        size={50}
-        source={
-          avatar
-        }
-      />
-      <Text>{user.displayName}</Text>
-      <Button mode="contained" onPress={handleLogout}>LOGOUT</Button>
+      <View style={Styles.header}>
+        <Avatar.Image size={50} source={{ uri: avatar }} />
+        <Text style={Styles.name}>{user.displayName}</Text>
+      </View>
+      <View style={Styles.body}>
+        <Text style={Styles.label}>Email: {user.email}</Text>
+        <Text style={Styles.label}>Criado em: {
+          new Date(user.metadata.creationTime).toLocaleDateString()
+        }</Text>
+        <Text style={Styles.label}>Último acesso: {
+          new Date(user.metadata.lastSignInTime).toLocaleDateString()
+        }</Text>
+      </View>
+      <Button style={Styles.button} mode="contained" onPress={handleLogout}>
+        Sair
+      </Button>
     </View>
   );
 }
