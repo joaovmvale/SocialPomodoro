@@ -20,7 +20,6 @@ export const AuthProvider = ({ children }) => {
       }
     });
     loadPosts()
-
   }, []);
 
 
@@ -28,61 +27,27 @@ export const AuthProvider = ({ children }) => {
     setCurrentChat(conversationID)
   }
 
-  // async function loadPosts() {
-
-  //   const usersSnapshot = await firebase.firestore().collection("Users").get()
-  //   usersSnapshot.forEach(async user => {
-
-  //     user.ref.collection("Posts").get().then(postsSnapshot => {
-  //       setPosts(postsSnapshot.docs.map(post => {
-
-  //         let postData = post.data()
-  //         let userData = user.data()
-
-  //         let postObject = { ...postData, userData }
-
-  //         return postObject
-
-  //       }))
-  //     })
-  //   })
-
-  // }
-
-  async function loadPosts(){
-
+  async function loadPosts() {
     const usersSnapshot = await firebase.firestore().collection("Users").get()
     let list = []
-    usersSnapshot.forEach(async user=>{
-
-      await user.ref.collection("Posts").onSnapshot(postsSnapshot=>{
-        postsSnapshot.docChanges().forEach(change=>{
-
-          if(change.type == 'added'){
+    usersSnapshot.forEach(async user => {
+      await user.ref.collection("Posts").onSnapshot(postsSnapshot => {
+        postsSnapshot.docChanges().forEach(change => {
+          if (change.type == 'added') {
             let postData = change.doc.data()
             let userData = user.data()
-  
-            let postObject = {...postData, userData}
-            
+            let postObject = { ...postData, userData }
             list.unshift(postObject)
-            
-          } else if(change.type == 'removed'){
-
-            let index = list.findIndex(()=>change.doc.data())
-            list.splice(index-1, 1)
+          } else if (change.type == 'removed') {
+            let index = list.findIndex(() => change.doc.data())
+            list.splice(index - 1, 1)
           }
-
-          list.sort((a, b)=>b.createdTime - a.createdTime)
+          list.sort((a, b) => b.createdTime - a.createdTime)
           setPosts(list)
- 
         })
-
       })
-
     })
-
   }
-
 
   const value = {
     isLoggedIn,

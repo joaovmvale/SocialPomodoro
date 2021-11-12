@@ -13,7 +13,6 @@ export default function Profile() {
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      console.log(user);
       setAvatar(user.photoURL);
     }
   });

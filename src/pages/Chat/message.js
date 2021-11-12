@@ -21,7 +21,7 @@ export default function Conversation(props) {
 
     function createMessageTime() {
 
-        let hours = "0" + props.messageOBJ.createdTime.getHours()
+        let hours = props.messageOBJ.createdTime.getHours()
         let minutes = props.messageOBJ.createdTime.getMinutes()
 
         let string = hours + ":" + minutes
