@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import firebase from "../../utils/Firebase";
 import PostOptions from "./PostOptions";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import AuthContext from "../../contexts/auth";
 
 var storage = firebase.storage();
 
@@ -16,7 +17,7 @@ export default function Post(props) {
     "https://firebasestorage.googleapis.com/v0/b/socialpomodoro-b18de.appspot.com/o/defaultprofile.png?alt=media&token=80dd74fb-e94b-44ed-9085-7546d681ee80"
   );
   const [dropdown, setDropdown] = useState(false);
-
+  const {user} = useContext(AuthContext)
   useEffect(() => {
     const fetchData = () => {
       setTimeout(async () => {
@@ -57,13 +58,18 @@ export default function Post(props) {
             {props.postObject.userData.cityState}
           </Text>
         </View>
-        <Ionicons
-          style={styles.more}
-          name="ellipsis-vertical-outline"
-          size={30}
-          color="black"
-          onPress={() => setDropdown(!dropdown)}
-        />
+        {
+
+          user.uid == props.postObject.userData.id && 
+          <Ionicons
+            style={styles.more}
+            name="ellipsis-vertical-outline"
+            size={30}
+            color="black"
+            onPress={() => setDropdown(!dropdown)}
+          />
+        
+        }
         <PostOptions id={props.postObject.id} display={dropdown} />
       </View>
 

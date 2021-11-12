@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     let list = []
     usersSnapshot.forEach(async user=>{
 
-      await user.ref.collection("Posts").orderBy('createdTime').onSnapshot(postsSnapshot=>{
+      await user.ref.collection("Posts").onSnapshot(postsSnapshot=>{
         postsSnapshot.docChanges().forEach(change=>{
 
           if(change.type == 'added'){
@@ -69,8 +69,13 @@ export const AuthProvider = ({ children }) => {
             
             list.unshift(postObject)
             
-          } else if(change.type == 'removed'){}
+          } else if(change.type == 'removed'){
 
+            let index = list.findIndex(()=>change.doc.data())
+            list.splice(index-1, 1)
+          }
+
+          list.sort((a, b)=>b.createdTime - a.createdTime)
           setPosts(list)
  
         })
@@ -81,19 +86,6 @@ export const AuthProvider = ({ children }) => {
 
   }
 
-  function deletePostCTX(postID) {
-
-    let list = []
-    posts.forEach(post => {
-
-      if (post.id != postID)
-        list.push(post)
-
-    })
-    setPosts(list)
-
-  }
-
 
   const value = {
     isLoggedIn,
@@ -101,7 +93,6 @@ export const AuthProvider = ({ children }) => {
     user,
     currentChat,
     loadPosts,
-    deletePostCTX,
     changeCurrentChat
   };
 

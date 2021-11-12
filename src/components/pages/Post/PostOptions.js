@@ -5,11 +5,9 @@ import AuthContext from "../../contexts/auth";
 
 export default function PostOptions(props) {
 
-  const { user, deletePostCTX } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   async function deletePost() {
-
-    deletePostCTX(props.id)
 
     try {
       await firebase.firestore()
